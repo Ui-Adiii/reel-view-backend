@@ -106,38 +106,6 @@ Base URL: `http://localhost:3000`
 Notes:
 - Auth middleware reads JWT from `token` httpOnly cookie. Cookies are set with `secure: true` and `sameSite: "None"`; use HTTPS or appropriate dev tooling.
 
-### Sample Requests
-Register user
-```bash
-curl -X POST http://localhost:3000/api/auth/user/register \
-  -H "Content-Type: application/json" \
-  -d '{"fullName":"Jane Doe","email":"jane@example.com","password":"secret123"}' -i
-```
-
-Login user (saves auth cookie)
-```bash
-curl -X POST http://localhost:3000/api/auth/user/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"jane@example.com","password":"secret123"}' -i
-```
-
-Create food (partner auth cookie required)
-```bash
-curl -X POST http://localhost:3000/api/food/add-food \
-  -H "Cookie: token=YOUR_JWT_COOKIE_VALUE" \
-  -F "video=@/path/to/video.mp4" \
-  -F "name=Delicious Pasta" \
-  -F "description=Quick creamy pasta"
-```
-
-Like a food (user auth cookie required)
-```bash
-curl -X POST http://localhost:3000/api/food/like \
-  -H "Content-Type: application/json" \
-  -H "Cookie: token=YOUR_JWT_COOKIE_VALUE" \
-  -d '{"foodId":"<FOOD_ID>"}'
-```
-
 ### Data Models (Mongoose)
 - `User`: `fullName`, `email` (unique), `password` (select: false)
 - `FoodPartner`: `name`, `contactName`, `phone` (unique), `address`, `email` (unique), `password` (select: false)
